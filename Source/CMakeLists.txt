@@ -180,6 +180,8 @@ SET(SRCS
   cmExtraCodeBlocksGenerator.h
   cmExtraEclipseCDT4Generator.cxx
   cmExtraEclipseCDT4Generator.h
+  cmExtraEDEGenerator.cxx
+  cmExtraEDEGenerator.h
   cmFileTimeComparison.cxx
   cmFileTimeComparison.h
   cmGeneratedFileStream.cxx

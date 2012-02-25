@@ -95,7 +95,7 @@ void cmExtraEDEGenerator::CreateProjectFile(
   this->CreateNewProjectFile(lgs, filename);
 }
 
-
+namespace {
 /* Tree is used to create a "Virtual Folder" in EDE, in which all
  CMake files this project depends on will be put. This means additionally
  to the "Sources" and "Headers" virtual folders of EDE, there will
@@ -233,6 +233,7 @@ void Tree::BuildUnitImpl(std::string& unitString,
     it->BuildUnitImpl(unitString,
                       virtualFolderPath + path + "\\", fsPath + path + "/");
     }
+}
 }
 
 

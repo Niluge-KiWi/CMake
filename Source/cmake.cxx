@@ -90,6 +90,7 @@
 
 #if !defined(CMAKE_BOOT_MINGW)
 # include "cmExtraCodeBlocksGenerator.h"
+# include "cmExtraEDEGenerator.h"
 #endif
 
 #ifdef CMAKE_USE_KDEVELOP
@@ -1843,6 +1844,9 @@ void cmake::AddDefaultExtraGenerators()
 
   this->AddExtraGenerator(cmExtraCodeBlocksGenerator::GetActualName(),
                           &cmExtraCodeBlocksGenerator::New);
+  
+  this->AddExtraGenerator(cmExtraEDEGenerator::GetActualName(),
+                          &cmExtraEDEGenerator::New);
 
 #ifdef CMAKE_USE_ECLIPSE
   this->AddExtraGenerator(cmExtraEclipseCDT4Generator::GetActualName(),
