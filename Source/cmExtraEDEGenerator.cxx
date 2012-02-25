@@ -2,6 +2,7 @@
   CMake - Cross Platform Makefile Generator
   Copyright 2004-2009 Kitware, Inc.
   Copyright 2004 Alexander Neundorf (neundorf@kde.org)
+  Copyright 2012 Thomas Riccardi (riccardi.thomas@gmail.com)
 
   Distributed under the OSI-approved BSD License (the "License");
   see accompanying file Copyright.txt for details.
@@ -10,7 +11,7 @@
   implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
   See the License for more information.
 ============================================================================*/
-#include "cmExtraCodeBlocksGenerator.h"
+#include "cmExtraEDEGenerator.h"
 #include "cmGlobalUnixMakefileGenerator3.h"
 #include "cmLocalUnixMakefileGenerator3.h"
 #include "cmMakefile.h"
@@ -37,13 +38,13 @@ http://forums.codeblocks.org/index.php/topic,6789.0.html
 */
 
 //----------------------------------------------------------------------------
-void cmExtraCodeBlocksGenerator
+void cmExtraEDEGenerator
 ::GetDocumentation(cmDocumentationEntry& entry, const char*) const
 {
   entry.Name = this->GetName();
-  entry.Brief = "Generates CodeBlocks project files.";
+  entry.Brief = "Generates EDE project files.";
   entry.Full =
-    "Project files for CodeBlocks will be created in the top directory "
+    "Project files for EDE will be created in the top directory "
     "and in every subdirectory which features a CMakeLists.txt file "
     "containing a PROJECT() call. "
     "Additionally a hierarchy of makefiles is generated into the "
@@ -51,7 +52,7 @@ void cmExtraCodeBlocksGenerator
     "the default make target.  A \"make install\" target is also provided.";
 }
 
-cmExtraCodeBlocksGenerator::cmExtraCodeBlocksGenerator()
+cmExtraEDEGenerator::cmExtraEDEGenerator()
 :cmExternalMakefileProjectGenerator()
 {
 #if defined(_WIN32)
@@ -64,7 +65,7 @@ cmExtraCodeBlocksGenerator::cmExtraCodeBlocksGenerator()
 }
 
 
-void cmExtraCodeBlocksGenerator::Generate()
+void cmExtraEDEGenerator::Generate()
 {
   // for each sub project in the project create a codeblocks project
   for (std::map<cmStdString, std::vector<cmLocalGenerator*> >::const_iterator
@@ -79,7 +80,7 @@ void cmExtraCodeBlocksGenerator::Generate()
 
 
 /* create the project file */
-void cmExtraCodeBlocksGenerator::CreateProjectFile(
+void cmExtraEDEGenerator::CreateProjectFile(
                                      const std::vector<cmLocalGenerator*>& lgs)
 {
   const cmMakefile* mf=lgs[0]->GetMakefile();
@@ -95,9 +96,9 @@ void cmExtraCodeBlocksGenerator::CreateProjectFile(
 }
 
 
-/* Tree is used to create a "Virtual Folder" in CodeBlocks, in which all
+/* Tree is used to create a "Virtual Folder" in EDE, in which all
  CMake files this project depends on will be put. This means additionally
- to the "Sources" and "Headers" virtual folders of CodeBlocks, there will
+ to the "Sources" and "Headers" virtual folders of EDE, there will
  now also be a "CMake Files" virtual folder.
  Patch by Daniel Teske <daniel.teske AT nokia.com> (which use C::B project
  files in QtCreator).*/
@@ -235,7 +236,7 @@ void Tree::BuildUnitImpl(std::string& unitString,
 }
 
 
-void cmExtraCodeBlocksGenerator
+void cmExtraEDEGenerator
   ::CreateNewProjectFile(const std::vector<cmLocalGenerator*>& lgs,
                          const std::string& filename)
 {
@@ -310,7 +311,7 @@ void cmExtraCodeBlocksGenerator
   std::string make = mf->GetRequiredDefinition("CMAKE_MAKE_PROGRAM");
 
   fout<<"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n"
-        "<CodeBlocks_project_file>\n"
+        "<EDE_project_file>\n"
         "   <FileVersion major=\"1\" minor=\"6\" />\n"
         "   <Project>\n"
         "      <Option title=\"" << mf->GetProjectName()<<"\" />\n"
@@ -509,7 +510,7 @@ void cmExtraCodeBlocksGenerator
       }
     }
 
-  // insert all source files in the CodeBlocks project
+  // insert all source files in the EDE project
   // first the C/C++ implementation files, then all others
   for (std::map<std::string, cmSourceFile*>::const_iterator
        sit=cFiles.begin();
@@ -532,12 +533,12 @@ void cmExtraCodeBlocksGenerator
   fout<<unitFiles;
 
   fout<<"   </Project>\n"
-        "</CodeBlocks_project_file>\n";
+        "</EDE_project_file>\n";
 }
 
 
 // Generate the xml code for one target.
-void cmExtraCodeBlocksGenerator::AppendTarget(cmGeneratedFileStream& fout,
+void cmExtraEDEGenerator::AppendTarget(cmGeneratedFileStream& fout,
                                               const char* targetName,
                                               cmTarget* target,
                                               const char* make,
@@ -673,8 +674,8 @@ void cmExtraCodeBlocksGenerator::AppendTarget(cmGeneratedFileStream& fout,
 }
 
 
-// Translate the cmake compiler id into the CodeBlocks compiler id
-std::string cmExtraCodeBlocksGenerator::GetCBCompilerId(const cmMakefile* mf)
+// Translate the cmake compiler id into the EDE compiler id
+std::string cmExtraEDEGenerator::GetCBCompilerId(const cmMakefile* mf)
 {
   // figure out which language to use
   // for now care only for C and C++
@@ -716,8 +717,8 @@ std::string cmExtraCodeBlocksGenerator::GetCBCompilerId(const cmMakefile* mf)
 }
 
 
-// Translate the cmake target type into the CodeBlocks target type id
-int cmExtraCodeBlocksGenerator::GetCBTargetType(cmTarget* target)
+// Translate the cmake target type into the EDE target type id
+int cmExtraEDEGenerator::GetCBTargetType(cmTarget* target)
 {
   if ( target->GetType()==cmTarget::EXECUTABLE)
     {
@@ -745,7 +746,7 @@ int cmExtraCodeBlocksGenerator::GetCBTargetType(cmTarget* target)
 
 // Create the command line for building the given target using the selected
 // make
-std::string cmExtraCodeBlocksGenerator::BuildMakeCommand(
+std::string cmExtraEDEGenerator::BuildMakeCommand(
              const std::string& make, const char* makefile, const char* target)
 {
   std::string command = make;

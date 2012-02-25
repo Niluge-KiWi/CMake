@@ -2,6 +2,7 @@
   CMake - Cross Platform Makefile Generator
   Copyright 2004-2009 Kitware, Inc.
   Copyright 2004 Alexander Neundorf (neundorf@kde.org)
+  Copyright 2012 Thomas Riccardi (riccardi.thomas@gmail.com)
 
   Distributed under the OSI-approved BSD License (the "License");
   see accompanying file Copyright.txt for details.
@@ -10,8 +11,8 @@
   implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
   See the License for more information.
 ============================================================================*/
-#ifndef cmExtraCodeBlocksGenerator_h
-#define cmExtraCodeBlocksGenerator_h
+#ifndef cmExtraEDEGenerator_h
+#define cmExtraEDEGenerator_h
 
 #include "cmExternalMakefileProjectGenerator.h"
 
@@ -20,19 +21,19 @@ class cmMakefile;
 class cmTarget;
 class cmGeneratedFileStream;
 
-/** \class cmExtraCodeBlocksGenerator
- * \brief Write CodeBlocks project files for Makefile based projects
+/** \class cmExtraEDEGenerator
+ * \brief Write EDE project files for Makefile based projects
  */
-class cmExtraCodeBlocksGenerator : public cmExternalMakefileProjectGenerator
+class cmExtraEDEGenerator : public cmExternalMakefileProjectGenerator
 {
 public:
-  cmExtraCodeBlocksGenerator();
+  cmExtraEDEGenerator();
 
   virtual const char* GetName() const
-                         { return cmExtraCodeBlocksGenerator::GetActualName();}
-  static const char* GetActualName()                    { return "CodeBlocks";}
+                         { return cmExtraEDEGenerator::GetActualName();}
+  static const char* GetActualName()                    { return "EDE";}
   static cmExternalMakefileProjectGenerator* New()
-                                     { return new cmExtraCodeBlocksGenerator; }
+                                     { return new cmExtraEDEGenerator; }
   /** Get the documentation entry for this generator.  */
   virtual void GetDocumentation(cmDocumentationEntry& entry,
                                 const char* fullName) const;
