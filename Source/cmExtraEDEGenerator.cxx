@@ -27,18 +27,6 @@
 // TMP
 #include <iostream>
 
-/* Some useful URLs:
-Homepage:
-http://www.codeblocks.org
-
-File format docs:
-http://wiki.codeblocks.org/index.php?title=File_formats_description
-http://wiki.codeblocks.org/index.php?title=Workspace_file
-http://wiki.codeblocks.org/index.php?title=Project_file
-
-Discussion:
-http://forums.codeblocks.org/index.php/topic,6789.0.html
-*/
 
 //----------------------------------------------------------------------------
 void cmExtraEDEGenerator
@@ -50,6 +38,7 @@ void cmExtraEDEGenerator
     "Project files for EDE will be created in the top directory "
     "and in every subdirectory which features a CMakeLists.txt file "
     "containing a PROJECT() call. "
+    "Additional EDE files will be created for each CMakeLists.txt files."
     "Additionally a hierarchy of makefiles is generated into the "
     "build tree.  The appropriate make program can build the project through "
     "the default make target.  A \"make install\" target is also provided.";
@@ -59,9 +48,9 @@ cmExtraEDEGenerator::cmExtraEDEGenerator()
 :cmExternalMakefileProjectGenerator()
 {
 #if defined(_WIN32)
-  this->SupportedGlobalGenerators.push_back("MinGW Makefiles");
-  this->SupportedGlobalGenerators.push_back("NMake Makefiles");
 // disable until somebody actually tests it:
+//  this->SupportedGlobalGenerators.push_back("MinGW Makefiles");
+//  this->SupportedGlobalGenerators.push_back("NMake Makefiles");
 //  this->SupportedGlobalGenerators.push_back("MSYS Makefiles");
 #endif
   this->SupportedGlobalGenerators.push_back("Unix Makefiles");
