@@ -50,17 +50,6 @@ private:
   
   void CreateNewProjectFile(const std::vector<cmLocalGenerator*>& lgs,
                                 const std::string& filename);
-  std::string GetCBCompilerId(const cmMakefile* mf);
-  int GetCBTargetType(cmTarget* target);
-  std::string BuildMakeCommand(const std::string& make, const char* makefile,
-                               const char* target);
-  void AppendTarget(cmGeneratedFileStream& fout,
-                    const char* targetName,
-                    cmTarget* target,
-                    const char* make,
-                    const cmMakefile* makefile,
-                    const char* compiler);
-
 };
 
 #endif
