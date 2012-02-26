@@ -133,7 +133,9 @@ void cmExtraEDEGenerator::CreateNewLocalGeneratorFile(cmLocalGenerator* lg,
   //TODO configurations?
   //mf->GetConfigurations()
   //TODO targets
-  //mf->GetTargets()
+  //cmTargets& targets=mf->GetTargets();
+  //TODO defineflags
+  //std::string defineFlags=mf->GetDefineFlags();
       
   fout<<"))\n";
 
