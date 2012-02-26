@@ -41,8 +41,13 @@ public:
   virtual void Generate();
 private:
 
-  void CreateProjectFile(const std::vector<cmLocalGenerator*>& lgs);
+  void CreateLocalGeneratorFile(cmLocalGenerator* lg);
 
+  void CreateNewLocalGeneratorFile(cmLocalGenerator* lg,
+                                   const std::string& filename);
+
+  void CreateProjectFile(const std::vector<cmLocalGenerator*>& lgs);
+  
   void CreateNewProjectFile(const std::vector<cmLocalGenerator*>& lgs,
                                 const std::string& filename);
   std::string GetCBCompilerId(const cmMakefile* mf);
