@@ -1680,7 +1680,7 @@ bool cmTarget::FindSourceFiles()
 }
 
 //----------------------------------------------------------------------------
-std::vector<cmSourceFile*> const& cmTarget::GetSourceFiles()
+std::vector<cmSourceFile*> const& cmTarget::GetSourceFiles() const
 {
   return this->SourceFiles;
 }

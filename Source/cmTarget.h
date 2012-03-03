@@ -115,7 +115,7 @@ public:
   /**
    * Get the list of the source files used by this target
    */
-  std::vector<cmSourceFile*> const& GetSourceFiles();
+  std::vector<cmSourceFile*> const& GetSourceFiles() const;
   void AddSourceFile(cmSourceFile* sf);
 
   /** Get sources that must be built before the given source.  */
