@@ -59,7 +59,7 @@ cmExtraEDEGenerator::cmExtraEDEGenerator()
 
 void cmExtraEDEGenerator::Generate()
 {
-  // for each sub project in the project create a codeblocks project
+  // for each sub project in the project create an ede project
   for (std::map<cmStdString, std::vector<cmLocalGenerator*> >::const_iterator
       it = this->GlobalGenerator->GetProjectMap().begin();
       it!= this->GlobalGenerator->GetProjectMap().end();
