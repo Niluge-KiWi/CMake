@@ -162,8 +162,10 @@ void cmExtraEDEGenerator::CreateNewLocalGeneratorFile(cmLocalGenerator* lg,
     }
   fout<<"))";
   
-  //TODO defineflags
-  //std::string defineFlags=mf->GetDefineFlags();
+  // defineflags
+  // TODO fix it: it doesn't work as expected
+  // std::string defineFlags=mf->GetDefineFlags();
+  // fout<<" (define-flags . \""<<defineFlags<<"\")";
       
   fout<<")\n";
 
