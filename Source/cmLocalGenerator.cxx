@@ -2143,7 +2143,7 @@ cmLocalGenerator::ConvertToOptionallyRelativeOutputPath(const char* remote)
 }
 
 //----------------------------------------------------------------------------
-const char* cmLocalGenerator::GetRelativeRootPath(RelativeRoot relroot)
+const char* cmLocalGenerator::GetRelativeRootPath(RelativeRoot relroot) const
 {
   switch (relroot)
     {

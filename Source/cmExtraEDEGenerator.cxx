@@ -202,29 +202,48 @@ void cmExtraEDEGenerator
     "\n"
     "((project . \""<<projectName<<"\")\n"
     " (local-generators . '(";
-  std::set<std::string> subProjects;
+  std::set<std::pair<std::string,std::string> > subProjects;
   for(std::vector<cmLocalGenerator*>::const_iterator it=lgs.begin();
       it!=lgs.end();
       ++it)
     {
-      if((*it)->GetMakefile()->GetProjectName()!=projectName)
+    std::string currentProjectName=(*it)->GetMakefile()->GetProjectName();
+    if(currentProjectName!=projectName)
+      {
+      // this is a subproject
+      // is it a direct subproject?
+      const cmLocalGenerator* lg=*it;
+      while(lg->GetParent()->GetMakefile()->GetProjectName()==
+        currentProjectName)
         {
-        // this is a subproject
-        //TODO store root path
-        subProjects.insert((*it)->GetMakefile()->GetProjectName());
-        continue;
+        lg=lg->GetParent();
         }
+      std::string parentProjectName=
+        lg->GetParent()->GetMakefile()->GetProjectName();
+      if(parentProjectName==projectName)
+        {
+        // this is a direct subproject
+        std::string startPath=lg->GetRelativeRootPath(cmLocalGenerator::START);
+        subProjects.insert(std::make_pair(currentProjectName,startPath));
+        }      
+      continue;
+      }
     std::string startOutputPath=
-      (*it)->GetRelativeRootPath(cmLocalGenerator::START_OUTPUT);
+      (*it)->GetRelativeRootPath(cmLocalGenerator::START);
     fout<<"\""<<startOutputPath<<"\" ";
     }
   fout<<"))\n"
     " (sub-projects '(";
-  for(std::set<std::string>::const_iterator it=subProjects.begin();
+  for(std::set<std::pair<std::string,std::string> >::const_iterator it=subProjects.begin();
       it!=subProjects.end();
       ++it)
     {
-    fout<<"\""<<*it<<"\" ";
+    if (it!=subProjects.begin())
+      fout<<"                 ";
+    fout<<"'((name . \""<<it->first<<"\")\n"
+      "                   (start-dir . \""<<it->second<<"\"))";
+    if(it!=--subProjects.end())
+      fout<<"\n";
     }
   fout<<"))";
 

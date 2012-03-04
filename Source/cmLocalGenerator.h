@@ -116,7 +116,7 @@ public:
   /**
     * Get path for the specified relative root.
     */
-  const char* GetRelativeRootPath(RelativeRoot relroot);
+  const char* GetRelativeRootPath(RelativeRoot relroot) const;
 
   /**
    * Convert the given path to an output path that is optionally
@@ -128,6 +128,7 @@ public:
 
   ///! set/get the parent generator
   cmLocalGenerator* GetParent(){return this->Parent;}
+  const cmLocalGenerator* GetParent() const {return this->Parent;}
   void SetParent(cmLocalGenerator* g) { this->Parent = g; g->AddChild(this); }
 
   ///! set/get the children
